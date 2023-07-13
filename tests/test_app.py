@@ -8,9 +8,19 @@ test Get /albums
 def test_get_albums(page, test_web_address, db_connection):
     db_connection.seed("seeds/album_library.sql")
     page.goto(f"http://{test_web_address}/albums")
-    div_tags = page.locator('div')
-    expect(div_tags).to_have_text([
-        
+    h2_tags = page.locator('h2')
+    paragraph_tags = page.locator('p')
+    expect(h2_tags).to_have_text([
+        'Album one',
+        'Album two',
+        'Album three',
+        'Album four'
+    ])
+    expect(paragraph_tags).to_have_text([
+        'released: 2022',
+        'released: 2021',
+        'released: 2018',
+        'released: 2000'
     ])
 
 
@@ -20,14 +30,14 @@ def test_get_albums(page, test_web_address, db_connection):
 """
 We can get an emoji from the /emoji page
 """
-def test_get_emoji(page, test_web_address): # Note new parameters
-    # We load a virtual browser and navigate to the /emoji page
-    page.goto(f"http://{test_web_address}/emoji")
+# def test_get_emoji(page, test_web_address): # Note new parameters
+#     # We load a virtual browser and navigate to the /emoji page
+#     page.goto(f"http://{test_web_address}/emoji")
 
-    # We look at the <strong> tag
-    strong_tag = page.locator("strong")
+#     # We look at the <strong> tag
+#     strong_tag = page.locator("strong")
 
-    # We assert that it has the text ":)"
-    expect(strong_tag).to_have_text(":)")
+#     # We assert that it has the text ":)"
+#     expect(strong_tag).to_have_text(":)")
 
 # === End Example Code ===

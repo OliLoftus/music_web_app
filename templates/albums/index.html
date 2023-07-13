@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang = "en">
+    <head>
+        <tile>Album list</tile>
+    </head>
+    <body>
+        <h1>Albums</h1>
+
+        {% for album in albums %}
+        <article>
+            <h2>{{album.title}}</h2>
+            <p>released: {{album.release_year}}</p> 
+        </article>
+        {% endfor %}
+    </body>
+</html>
