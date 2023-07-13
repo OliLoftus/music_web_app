@@ -1,12 +1,70 @@
 import os
 from flask import Flask, request, render_template
 from lib.database_connection import get_flask_database_connection
+from lib.album import Album
+from lib.album_repository import AlbumRepository
+from lib.artist import Artist
+from lib.artist_repository import ArtistRepository
 
 # Create a new Flask app
 app = Flask(__name__)
 
 # == Your Routes Here ==
 
+
+
+
+# music_library routes
+
+# @app.route('/albums', methods=['POST'])
+# def post_albums():
+#     if 'title' not in request.form or 'release_year' not in request.form or 'artist_id' not in request.form:
+#         return 'You need to submit a title, release_year and artist_id.', 400
+#     connection = get_flask_database_connection(app)
+#     repository = AlbumRepository(connection)
+#     album = Album(
+#         None,
+#         request.form['title'],
+#         request.form['release_year'],
+#         request.form['artist_id'])
+#     repository.create(album)
+#     return 'Album added successfully.'
+
+# @app.route('/albums')
+# def get_albums():
+#     connection = get_flask_database_connection(app)
+#     repository = AlbumRepository(connection)
+#     albums = repository.all()
+#     result_string = ""
+#     for album in albums:
+#         result_string += str(f"{album}\n")
+#     return result_string
+
+# # GET /artists
+
+# @app.route('/artists')
+# def get_artists():
+#     connection = get_flask_database_connection(app)
+#     repository = ArtistRepository(connection)
+#     artists = repository.all()
+#     result_string = ""
+#     for artist in artists:
+#         print(artist)
+#         result_string += f"{artist.id}. {artist.name} "
+#     return result_string
+
+# # POST /artists
+
+# @app.route('/artists', methods=['POST'])
+# def post_artist():
+#     connection = get_flask_database_connection(app)
+#     repository = ArtistRepository(connection)
+#     artist = Artist(
+#         None,
+#         request.form['name'],
+#         request.form['genre'],)
+#     repository.create(artist)
+#     return ''
 
 # == Example Code Below ==
 
