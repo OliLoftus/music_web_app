@@ -23,6 +23,18 @@ def test_get_albums(page, test_web_address, db_connection):
         'released: 2000'
     ])
 
+def test_get_album_by_id(page, test_web_address, db_connection):
+    db_connection.seed("seeds/album_library.sql")
+    page.goto(f"http://{test_web_address}/albums")
+    page.click("text=Album one")
+
+    title_element = page.locator(".t-title")
+    print(title_element)
+    expect(title_element).to_have_text("Title: Album one")
+
+    author_element = page.locator(".t-release-year")
+    expect(author_element).to_have_text("released: 2022")
+
 
 
 # === Example Code Below ===

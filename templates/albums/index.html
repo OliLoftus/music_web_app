@@ -8,7 +8,9 @@
 
         {% for album in albums %}
         <article>
-            <h2>{{album.title}}</h2>
+            <h2>
+            <a href= "/albums/{{album.id}}">{{album.title}}</a>
+            </h2>
             <p>released: {{album.release_year}}</p> 
         </article>
         {% endfor %}
