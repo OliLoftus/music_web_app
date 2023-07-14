@@ -11,20 +11,18 @@ class Artist:
         return f"{self.name}, genre: {self.genre}"
     
     def is_valid(self):
-        if self.title == None or self.title == "":
+        if self.name == None or self.name == "":
             return False
-        if self.release_year == None or self.release_year == "":
-            return False
-        if self.artist_id == None or self.artist_id == "":
+        if self.genre == None or self.genre == "":
             return False
         return True
     
     def generate_errors(self):
         errors = []
-        if self.title == None or self.title == "":
-            errors.append("Title can't be blank")
-        if self.release_year == None or self.release_year == "":
-            errors.append("Release year can't be blank")
+        if self.name == None or self.name == "":
+            errors.append("Artist can't be blank")
+        if self.genre == None or self.genre == "":
+            errors.append("Genre can't be blank")
         if len(errors) == 0:
             return None
         else:

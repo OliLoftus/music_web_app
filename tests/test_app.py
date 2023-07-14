@@ -33,7 +33,7 @@ def test_get_album_by_id(page, test_web_address, db_connection):
     expect(title_element).to_have_text("Title: Album one")
 
     author_element = page.locator(".t-release-year")
-    expect(author_element).to_have_text("released: 2022")
+    expect(author_element).to_have_text("Released: 2022")
 
 """
 GET /artists/
@@ -59,17 +59,16 @@ def test_get_artists(page, test_web_address, db_connection):
 """
 GET /artists<id>
 """
-def test_get_album_by_id(page, test_web_address, db_connection):
+def test_get_artist_by_id(page, test_web_address, db_connection):
     db_connection.seed("seeds/album_library.sql")
     page.goto(f"http://{test_web_address}/artists")
     page.click("text=Pixies")
 
-    title_element = page.locator(".t-title")
-    print(title_element)
+    title_element = page.locator(".t-name")
     expect(title_element).to_have_text("Artist: Pixies")
 
     author_element = page.locator(".t-genre")
-    expect(author_element).to_have_text("genre: rock")
+    expect(author_element).to_have_text("Genre: rock")
 
 """
 When we create a new album
@@ -88,6 +87,9 @@ def test_create_album(db_connection, page, test_web_address):
     # And the field with the name attribute 'release_year'
     page.fill("input[name='release_year']", "2001")
 
+    # And the field with the name attribute 'release_year'
+    page.fill("input[name='artist_id']", "10")
+
     # Finally we click the button with the text 'Create Albumk'
     page.click("text=Create Album")
 
@@ -99,6 +101,7 @@ def test_create_album(db_connection, page, test_web_address):
 
     release_element = page.locator(".t-release-year")
     expect(release_element).to_have_text("Released: 2001")
+
 
 """
 If we create a new album without a title or release_year
@@ -145,10 +148,10 @@ def test_create_artist(db_connection, page, test_web_address):
 If we create a new artist without a title or genre
 We see an error message
 """
-def test_create_album_error(db_connection, page, test_web_address):
+def test_create_artist_error(db_connection, page, test_web_address):
     db_connection.seed("seeds/album_library.sql")
     page.goto(f"http://{test_web_address}/artists")
     page.click("text=Add a new artist")
     page.click("text=Create Artist")
     errors = page.locator(".t-errors")
-    expect(errors).to_have_text("There were errors with your submission: Artist can't be blank, Genre year can't be blank")
+    expect(errors).to_have_text("There were errors with your submission: Artist can't be blank, Genre can't be blank")

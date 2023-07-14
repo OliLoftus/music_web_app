@@ -119,13 +119,13 @@ def get_artist(id):
 
 # GET /artists/new
 # Returns a form to create a new artist
-@app.route('/albums/new', methods=['GET'])
+@app.route('/artists/new', methods=['GET'])
 def get_new_artist():
     return render_template('artists/new.html')
 
 
 # POST /artist
-# Creates a new book
+# Creates a new artist
 @app.route('/artists', methods=['POST'])
 def create_artist():
     # Set up the database connection and repository
@@ -137,11 +137,11 @@ def create_artist():
     genre = request.form['genre']
 
     # Create an artist object
-    album = Artist(None, name, genre)
+    artist = Artist(None, name, genre)
 
     # Check for validity and if not valid, show the form again with errors
     if not artist.is_valid():
-        return render_template('artists/new.html', artist=artist, errors=album.generate_errors()), 400
+        return render_template('artists/new.html', artist=artist, errors=artist.generate_errors()), 400
 
     # Save the artist to the database
     artist = repository.create(artist)
