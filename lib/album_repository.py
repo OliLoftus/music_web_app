@@ -13,8 +13,13 @@ class AlbumRepository:
         return albums
     
     def create(self, album):
-        self._connection.execute('INSERT INTO albums (title, release_year, artist_id) VALUES (%s, %s, %s)', [album.title, album.release_year, album.artist_id])
-        
+        rows = self._connection.execute('INSERT INTO albums (title, release_year, artist_id) VALUES (%s, %s, %s) RETURNING id', [album.title, album.release_year, album.artist_id])
+        print(rows)
+        row = rows[0]
+        album.id = row['id']
+        print(row['id'])
+        return album
+
     def find(self, album_id):
         rows = self._connection.execute("SELECT * FROM albums WHERE id = %s", [album_id])
         row = rows[0]

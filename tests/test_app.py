@@ -71,7 +71,7 @@ def test_get_album_by_id(page, test_web_address, db_connection):
     author_element = page.locator(".t-genre")
     expect(author_element).to_have_text("genre: rock")
 
-    """
+"""
 When we create a new album
 We see it in the albums index
 """
@@ -97,8 +97,8 @@ def test_create_album(db_connection, page, test_web_address):
     title_element = page.locator(".t-title")
     expect(title_element).to_have_text("Title: Drukqs")
 
-    author_element = page.locator(".t-release-year")
-    expect(author_element).to_have_text("Released: 2001")
+    release_element = page.locator(".t-release-year")
+    expect(release_element).to_have_text("Released: 2001")
 
 """
 If we create a new album without a title or release_year
@@ -112,20 +112,43 @@ def test_create_album_error(db_connection, page, test_web_address):
     errors = page.locator(".t-errors")
     expect(errors).to_have_text("There were errors with your submission: Title can't be blank, Release year can't be blank")
 
+    """
+When we create a new artist
+We see it in the srtists index
+"""
+def test_create_artist(db_connection, page, test_web_address):
+    db_connection.seed("seeds/album_library.sql")
+    page.goto(f"http://{test_web_address}/artists")
 
-# === Example Code Below ===
+    # This time we click the link with the text 'Add a new artist'
+    page.click("text=Add a new artist")
+
+    # Then we fill out the field with the name attribute 'title'
+    page.fill("input[name='name']", "Bicep")
+
+    # And the field with the name attribute 'release_year'
+    page.fill("input[name='genre']", "electronic")
+
+    # Finally we click the button with the text 'Create Albumk'
+    page.click("text=Create Artist")
+
+    # Just as before, the virtual browser acts just like a normal browser and
+    # goes to the next page without us having to tell it to.
+
+    title_element = page.locator(".t-name")
+    expect(title_element).to_have_text("Artist: Bicep")
+
+    release_element = page.locator(".t-genre")
+    expect(release_element).to_have_text("Genre: electronic")
 
 """
-We can get an emoji from the /emoji page
+If we create a new artist without a title or genre
+We see an error message
 """
-# def test_get_emoji(page, test_web_address): # Note new parameters
-#     # We load a virtual browser and navigate to the /emoji page
-#     page.goto(f"http://{test_web_address}/emoji")
-
-#     # We look at the <strong> tag
-#     strong_tag = page.locator("strong")
-
-#     # We assert that it has the text ":)"
-#     expect(strong_tag).to_have_text(":)")
-
-# === End Example Code ===
+def test_create_album_error(db_connection, page, test_web_address):
+    db_connection.seed("seeds/album_library.sql")
+    page.goto(f"http://{test_web_address}/artists")
+    page.click("text=Add a new artist")
+    page.click("text=Create Artist")
+    errors = page.locator(".t-errors")
+    expect(errors).to_have_text("There were errors with your submission: Artist can't be blank, Genre year can't be blank")
