@@ -35,6 +35,41 @@ def test_get_album_by_id(page, test_web_address, db_connection):
     author_element = page.locator(".t-release-year")
     expect(author_element).to_have_text("released: 2022")
 
+"""
+GET /artists/
+"""
+def test_get_artists(page, test_web_address, db_connection):
+    db_connection.seed("seeds/album_library.sql")
+    page.goto(f"http://{test_web_address}/artists")
+    h2_tags = page.locator('h2')
+    paragraph_tags = page.locator('p')
+    expect(h2_tags).to_have_text([
+        'Pixies',
+        'ABBA',
+        'Taylor Swift',
+        'Nina Simone'
+    ])
+    expect(paragraph_tags).to_have_text([
+        'genre: rock',
+        'genre: pop',
+        'genre: pop',
+        'genre: jazz'
+    ])
+
+"""
+GET /artists<id>
+"""
+def test_get_album_by_id(page, test_web_address, db_connection):
+    db_connection.seed("seeds/album_library.sql")
+    page.goto(f"http://{test_web_address}/artists")
+    page.click("text=Pixies")
+
+    title_element = page.locator(".t-title")
+    print(title_element)
+    expect(title_element).to_have_text("Artist: Pixies")
+
+    author_element = page.locator(".t-genre")
+    expect(author_element).to_have_text("genre: rock")
 
 
 # === Example Code Below ===

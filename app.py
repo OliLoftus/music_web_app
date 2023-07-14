@@ -54,11 +54,21 @@ def get_artists():
     connection = get_flask_database_connection(app)
     repository = ArtistRepository(connection)
     artists = repository.all()
-    result_string = ""
-    for artist in artists:
-        print(artist)
-        result_string += f"{artist.id}. {artist.name} "
-    return result_string
+    # result_string = ""
+    # for artist in artists:
+    #     print(artist)
+    #     result_string += f"{artist.id}. {artist.name} "
+    # return result_string
+    return render_template('/artists/index.html', artists=artists)
+
+#GET /artists/<id>
+
+@app.route('/artists/<int:id>')
+def get_artist(id):
+    connection = get_flask_database_connection(app)
+    repository = ArtistRepository(connection)
+    artist = repository.find(id)
+    return render_template('artists/show.html', artist=artist)
 
 # POST /artists
 
